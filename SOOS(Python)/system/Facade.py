@@ -7,10 +7,10 @@ class Facade(object):
 	
 	__controller = None;
 	def __init__(self):
-		self.__iniciaSistema()
+		self.__startSystem()
 	
 	
-	def __iniciaSistema(self):
+	def __startSystem(self):
 		try:
 			self.__controller = open("SOOS.txt",'r')
 		except:

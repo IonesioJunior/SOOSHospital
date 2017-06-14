@@ -13,6 +13,6 @@ class Controller(object):
 	def releaseSystem(self,key,name,birth):
 		verifySystem();
 		self.verifyKey(key);
-		registration = EmployeeBank.createFirstAcc(name,birth);
+		registration = EmployeeBank.registerFirstAcc(name,birth);
 		self.__systemReleased = True
 		return registration
