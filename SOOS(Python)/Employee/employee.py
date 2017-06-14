@@ -1,6 +1,7 @@
 #coding: utf-8
 
 from abc import ABCMeta,abstractmethod
+from PERMISSIONS import Permissions
 
 __author__ = "Ionesio Junior"
 
@@ -58,6 +59,13 @@ class Employee:
 			raise EmployeeException("Inválid Birth. Invalid Month")
 		elif(birth[0] < 1 or birth[1] == 2 and birth[0] > 29 or birth[0] > 31):
 			raise EmployeeException("Inválid Birth. Invalid Day")
+
+	
+	def verifyPermission(self,permission):
+		if(permission in self.__permissions):
+			return True
+		else:
+			return False
 
 	def confirmPassword(self,password):
 		if(self.__password != password):
