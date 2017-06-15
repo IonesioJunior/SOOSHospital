@@ -38,7 +38,7 @@ class EmployeeBank(object):
 			user.setBirth(birth)
 			message = "User attribute has been changed successfully!"
 		else:
-			message = "Invalid Attribute!"
+			raise EmployeeException("Invalid Attribute!!")
 		return message
 
 
@@ -72,7 +72,7 @@ class EmployeeBank(object):
 		elif(attribute == "PASSWORD"):
 			result = "You are not allowed to see user password!"
 		else:
-			result = "Invalid Attribute!"
+			raise EmployeeExceptio("Invalid Attribute!")
 		return result
 	
 	def __verifyRegistration(self,registration):
