@@ -68,8 +68,8 @@ class Drugs:
 	def getCategory(self):
 		return self.__categoryList
 
-
-
+	def getType(self):
+		return self.__drugType
 
 	def setPrice(self,newPrice):
 		self.__price = newPrice
@@ -88,7 +88,18 @@ class Drugs:
 		message += "Type: " + self.__drugType
 		return message
 
-
+	def __lt__(self,other):
+		return self.getDrugTypePrice() < other.getDrugTypePrice()
+	def __le__(self,other):
+		return self.getDrugTypePrice() <= other.getDrugTypePrice()
+	def __gt__(self,other):
+		return self.getDrugTypePrice() > other.getDrugTypePrice()
+	def __ge__(self,other):
+		return self.getDrugTypePrice() >= other.getDrugTypePrice()
+	def __eq__(self,other):
+		return self.getName() == other.getName() and self.getType() == other.getType() and self.getPrice() == other.getPrice()
+	def __ne__(self,other):
+		return not(self.__eq__(other))
 
 	
 	def __verifyParameters(self,name,price,amount,category):
