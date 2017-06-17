@@ -25,17 +25,19 @@ class PatientBank(object):
 
 	def getInfoPatient(self,patientId,attribute):
 		patient = self.searchPatient(patientId)
-		if(type(patient) != type(None)):
-			patient.getInfo(attribute)
-		else:
-			raise PatientException("Invalid Patient ID")
+		return patient.getInfo(attribute)
 	
 	def searchPatient(self,patientId):
-		return self.__patientTree.search(patientId).getData()
-		
+		patient = self.__patientTree.search(patientId).getData()
+		if(type(patient) == type(None)):
+			raise PatientException("Invalid Patient ID")
+		return patient
+
 	def performProcedure(self,patientId,doctorName,procedureName,drugsCost = 0,organ = None):
 		patient = self.searchPatient(patientId)
 		totalCost = self.__procedureManager.performProcedure(procedureName,patient,doctorName,organ) + drugsCost
 		patient.storeSpending(totalCost)
-		patient.changeCardType()
-		
+		patient.changeCardType()		
+	
+	def getMedicalRecords(self,patientId):
+		return self.searchPatient(patientId).getMedicalRecords().__str__()
