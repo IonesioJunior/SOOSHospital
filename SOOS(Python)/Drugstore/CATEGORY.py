@@ -1,6 +1,6 @@
 from enum import Enum
 
-class DrugsCategory(Enum):
+class CATEGORY(Enum):
         PAINKILLER = 1
         ANTIBIOTIC = 2
         ANTIEMETIC = 3

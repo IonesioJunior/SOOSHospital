@@ -1,9 +1,15 @@
 #coding: utf-8
 
-__author__ = "Ionesio Junior"
+import sys
+sys.path.append("../Procedures/")
+from clinicappointment import *
+from bariatricsurgery import *
+from organtransplantation import *
+from sexualreassignment import *
 from cards import Card,Vip,Master,Normal
 from medicalrecords import *
 
+__author__ = "Ionesio Junior"
 class PatientException(Exception):
 	def __init__(self,value):
 		self.__value = value
@@ -44,6 +50,10 @@ class Patient(object):
 	def getMedicalRecords(self):
 		return self.__medicalRecords
 
+	def getGender(self):
+		return	self.__medicalRecords.getGender()
+
+
 	def setGender(self,newGender):
 		self.__medicalRecords.setGender(newGender)
 
@@ -55,21 +65,21 @@ class Patient(object):
 	def getSpending(self):
 		return self.__spending
 
-	def __strategy(self):
+	def changeCardType(self):
 		if(self.__card.getCredits() >= 150 and self.__card.getCredits() < 350):
 			self.__card = Master(self.__card.getCredits())
 		elif(self.__card.getCredits() >= 350):
 			self.__card = Vip(self.__card.getCredits())
 
 	def __addCreditCard(self,procedure):
-		if(type(procedure) == ClinicalAppointment):
-			self.__card.addPoints()
+		if(type(procedure) == ClinicAppointment):
+			self.__card.addCredit(procedure.getCredit())
 		elif(type(procedure) == BariatricSurgery):
-			self.__card.addPoints()
+			self.__card.addCredit(procedure.getCredit())
 		elif(type(procedure) == OrganTransplantation):
-			self.__card.addPoints()
+			self.__card.addCredit(procedure.getCredit())
 		elif(type(procedure) == SexualReassignment):
-			self.__card.addPoints()
+			self.__card.addCredit(procedure.getCredit())
 		else:
 			raise PatientException("Invalid Procedure!")
 	
@@ -93,4 +103,30 @@ class Patient(object):
 		text += "Spending: R$" + str(self.__spending) + "\n"
 		return text
 	def __eq__(self,other):
-		return self.getMedicalRecords() == other.getMedicalRecords()
+		if(type(None) == type(other)):
+			return False
+		elif(type(other) == int):
+			return self.getId() == other
+		else:
+			return self.getMedicalRecords() == other.getMedicalRecords()
+	
+	def __gt__(self,other):
+		if(type(other) == int):
+			return self.getId() > other
+		else:
+			return self.getId() > other.getId()
+	def __ge__(self,other):
+		if(type(other) == int):
+			return self.getId() >= other
+		else:
+			return self.getId() >= other.getId()
+	def __le__(self,other):
+		if(type(other) == int):
+			return self.getId() <= other
+		else:
+			return self.getId() <= other.getId()
+	def __lt__(self,other):
+		if(type(other) == int):
+			return self.getId() == other.getId()
+		else:
+			return self.getId() < other.getId()

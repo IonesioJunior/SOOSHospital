@@ -66,7 +66,9 @@ class MedicalRecords(object):
 		text += "Age: " + self.getAge() + "\n"
 		text += "Gender: "  + self.__gender + "\n"
 		text += "Sex: " + self.__sex + "\n"  
-		text += "Procedures: " + "\n".join(self.__proceduresList) + "\n"
+		text += "Procedures: \n"
+		for procedure in self.__proceduresList:
+			text += procedure.__str__()
 		return text
 
 	def addProcedure(self, procedure):
