@@ -1,16 +1,8 @@
 #coding: utf-8
-from enum import Enum
 from abc import ABCMeta,abstractmethod
+from CATEGORY import *
 
 __author__ = "Ionesio Junior"
-
-class DrugsCategory(Enum):
-	PAINKILLER = 1
-	ANTIBIOTIC = 2
-	ANTIEMETIC = 3
-	ANTIINFLAMMATORY = 4
-	ANTIPYRETIC = 5
-	HORMONAL = 6
 
 class DrugsException(Exception):
 	def __init__(self,value):
@@ -37,7 +29,7 @@ class Drugs:
 
 	def __defineCategory(self,category):
 		category = category.split(",")
-		enumList = [e.name for e in DrugsCategory]
+		enumList = [e.name for e in CATEGORY]
 		for i in range(len(category)):
 			if category[i].upper() in enumList:
 				self.__categoryList += category[i].lower() + ","

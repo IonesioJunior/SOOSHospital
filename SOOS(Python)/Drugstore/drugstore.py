@@ -47,7 +47,7 @@ class Drugstore(object):
 		return self.getDrugByName(name).__str__()
 	
 	def getDrugsByCategory(self,category):
-		drugs_category = [categ.name for categ in DrugsCategory]
+		drugs_category = [categ.name for categ in CATEGORY]
 		if(not(category.upper() in drugs_category)):
 			raise DrugsException("Invalid Category!")
 		else:
