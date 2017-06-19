@@ -56,6 +56,7 @@ class Controller(object):
 
 
 	def logout(self):
+		self.__verifyLogout()
 		self.__user = None
 
 
@@ -70,8 +71,8 @@ class Controller(object):
 	def changeInfoEmployee(self,registration,attribute,newValue):
 		self.__verifyUser()
 		try:
-			if(self.__user.verifyPermission(PERMISSION.CHANGEDATA)):
-				return self.__employeeBank.changeInfoEmployee(registration,attribute,newValue)
+			if(self.__user.verifyPermission(Permissions.CHANGEDATA)):
+				return self.__employeeBank.changeUserInfo(registration,attribute,newValue)
 			else:
 				ControllerException("You can't change data!")
 		except EmployeeException as e:
@@ -93,26 +94,26 @@ class Controller(object):
 
 	def changePassword(self,oldPassword,newPassword):
 		self.__verifyUser()
-			if(self.__user.getPassword() == oldPassword):
+		if(self.__user.getPassword() == oldPassword):
 				self.__user.setPassword(newPassword)
-			else:
-				raise ControllerException("Invalid password!")
 		else:
-			raise ControllerException("You need log in!")
+				raise ControllerException("Invalid password!")
 
 
 	def registerEmployee(self,name,job,birth):
 		self.__verifyUser()
-		if(self.__user.verifyPermission(Permissions.REGISTEREMPLOYEE)):
-			return self.__employeeBank.registerEmployee(name,job,birth)
-		else:
-			raise ControllerException("The User " + self.__user.getName() + "don't have permission to register new employeers!")
-
+		try:
+			if(self.__user.verifyPermission(Permissions.REGISTEREMPLOYEE)):
+				return self.__employeeBank.registerEmployee(name,job,birth)
+			else:
+				raise ControllerException("The User " + self.__user.getName() + "don't have permission to register new employeers!")
+		except EmployeeException as e:
+			return e.__str__()
 
 	def deleteEmployee(self,registration):
 		self.__verifyUser()
 		try:
-			if(self.__user.verifyPermission(Permissions.DELETEEMPLOYEE)):
+			if(self.__user.verifyPermission(Permissions.DELETE)):
 				self.__employeeBank.deleteEmployee(registration)
 			else:
 				raise ControllerException("You can't delete employee!")
@@ -190,7 +191,7 @@ class Controller(object):
 	def getMedicalRecords(self,patientId):
 		self.__verifyUser()
 		try:
-			return self.__patientBank.getMedicalRecords(patientId)
+			return self.__patientBank.getMedicalRecords(patientId).__str__()
 		except PatientException as e:
 			raise ControllerException("Error: " + str(e))
 	
@@ -292,11 +293,17 @@ class Controller(object):
 		if(self.__user != None):
 			raise ControllerException("Some user already logged in!")
 	
+	def __verifyLogout(self):
+		if(self.__user == None):
+			raise ControllerException("Nobody is logged in!")	
 
 	def __verifyKey(self,key):
 		if(key != "SOOS"):
 			raise ControllerException("Wrong Key!")
 	
+	def verifyLogin(self):
+		if(self.__user != None):
+			raise ControllerException("Someone is logged in")
 
 	def __verifyUser(self):
 		if(self.__user == None):

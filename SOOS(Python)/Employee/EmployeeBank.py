@@ -68,11 +68,11 @@ class EmployeeBank(object):
 		elif(attribute == "JOB"):
 			result = user.getJob()
 		elif(attribute == "BIRTH"):
-			result = user.getBirth()[0]  + "/" + user.getBirth()[1] + "/" + user.getBirth()[2]
+			result = str(user.getBirth()[0])  + "/" + str(user.getBirth()[1]) + "/" + str(user.getBirth()[2])
 		elif(attribute == "PASSWORD"):
 			result = "You are not allowed to see user password!"
 		else:
-			raise EmployeeExceptio("Invalid Attribute!")
+			raise EmployeeException("Invalid Attribute!")
 		return result
 	
 	def __verifyRegistration(self,registration):
