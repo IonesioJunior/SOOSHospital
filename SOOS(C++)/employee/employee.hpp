@@ -9,7 +9,7 @@ namespace Employees{
 	class Employee{
 		protected:
 			std::string name;
-			int register_number;
+			std::string register_number;
 			std::string password;
 			std::string date;
 			std::string job;
@@ -22,7 +22,7 @@ namespace Employees{
 			virtual std::string get_name();
 			virtual std::string get_job();
 			virtual std::string get_date();
-			virtual int get_register_number();
+			virtual std::string get_register_number();
 			virtual std::set<PERMISSIONS> get_permissions();
 			virtual void set_name( std::string new_name );
 			virtual void set_password( std::string new_password );
